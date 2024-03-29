@@ -15139,9 +15139,9 @@ __metadata:
   resolution: "se-2@workspace:."
   dependencies:
     "@farcaster/auth-kit": ^0.2.1
+    "@heroicons/react": v1
     "@tanstack/react-query": ^5.28.9
     frames.js: ^0.11.0
-    "@heroicons/react": v1
     husky: ^8.0.1
     lint-staged: ^13.0.3
     mongoose: ^8.2.4

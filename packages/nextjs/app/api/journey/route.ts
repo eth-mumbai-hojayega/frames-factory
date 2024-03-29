@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
   await connectDB();
   const payload = await req.json();
   const { walletAddress, name, journeyJson, desc, image } = payload;
+  console.log("payload", payload);
   const journey = new Journey({
     walletAddress: walletAddress,
     name: name,

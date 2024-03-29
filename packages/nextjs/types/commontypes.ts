@@ -10,7 +10,7 @@ export interface JourneyJson {
 }
 
 export interface Journey {
-  id: string;
+  _id: string;
   name: string;
   walletAddress: string;
   journeyJson: JourneyJson;
@@ -29,7 +29,7 @@ export interface FrameJson {
 }
 
 export interface Frame {
-  id: string;
+  _id: string;
   name: string;
   frameJson: FrameJson;
 }

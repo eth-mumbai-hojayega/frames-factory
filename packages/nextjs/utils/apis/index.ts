@@ -28,7 +28,7 @@ export const deleteProduct = async (id: string) => {
   return product;
 };
 
-export const createProduct = async (data: Journey) => {
+export const createProduct = async (data: Partial<Journey>) => {
   const response = await fetch(`${API_URL}/journey`, {
     method: "POST",
     headers: {
@@ -40,7 +40,7 @@ export const createProduct = async (data: Journey) => {
   return product;
 };
 
-export const createFrame = async (data: Frame) => {
+export const createFrame = async (data: Partial<Frame>) => {
   const response = await fetch(`${API_URL}/frame`, {
     method: "POST",
     headers: {

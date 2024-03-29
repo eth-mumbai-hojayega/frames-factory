@@ -1,10 +1,21 @@
-import mongoose from "mongoose";
+import { Journey as JourneyType } from "../types/commontypes";
+import mongoose, { Document, Schema } from "mongoose";
 
-const Journey = new mongoose.Schema(
+// Define the JourneyDocument interface extending Document
+interface JourneyDocument extends Document {
+  walletAddress: string;
+  name: string;
+  journeyJson: JourneyType;
+  desc?: string;
+  image?: string;
+}
+
+// Define the Journey schema
+const JourneySchema: Schema<JourneyDocument> = new Schema<JourneyDocument>(
   {
     walletAddress: String,
     name: String,
-    journeyJson: String,
+    journeyJson: Object as any as JourneyType, // Type assertion to any
     desc: String,
     image: String,
   },
@@ -13,14 +24,7 @@ const Journey = new mongoose.Schema(
   },
 );
 
-export default mongoose.models.Journey || mongoose.model("Journey", Journey);
+// Define and export the Journey model
+const Journey = mongoose.models.Journey || mongoose.model<JourneyDocument>("Journey", JourneySchema);
 
-// {
-//     nodes: [
-//         {
-//             "id": "1",
-//             "type": "start",
-//             "frame_id": ""
-//         },
-//     ],
-// };
+export default Journey;
