@@ -46,12 +46,13 @@
         "lint-staged": "^13.0.3"
     },
     "dependencies": {
+        "@coinbase/onchainkit": "^0.11.0",
         "@farcaster/auth-kit": "^0.2.1",
+        "@heroicons/react": "v1",
         "@tanstack/react-query": "^5.28.9",
         "frames.js": "^0.11.0",
         "mongoose": "^8.2.4",
         "reactflow": "^11.10.4",
-        "@heroicons/react": "v1",
         "viem": "^2.9.5"
     }
 }
