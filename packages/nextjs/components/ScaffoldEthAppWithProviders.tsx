@@ -6,6 +6,7 @@ import { AuthKitProvider } from "@farcaster/auth-kit";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { useTheme } from "next-themes";
 import { Toaster } from "react-hot-toast";
+import { ReactFlowProvider } from "reactflow";
 import { WagmiConfig } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
@@ -22,7 +23,6 @@ const config = {
   siweUri: "http://example.com/login",
   domain: "example.com",
 };
-
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   const price = useNativeCurrencyPrice();
   const setNativeCurrencyPrice = useGlobalState(state => state.setNativeCurrencyPrice);
@@ -70,7 +70,9 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
           theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
         >
           <AuthKitProvider config={config}>
-            <ScaffoldEthApp>{children}</ScaffoldEthApp>
+            <ReactFlowProvider>
+              <ScaffoldEthApp>{children}</ScaffoldEthApp>
+            </ReactFlowProvider>
           </AuthKitProvider>
         </RainbowKitProvider>
       </WagmiConfig>

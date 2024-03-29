@@ -47,6 +47,9 @@
     },
     "dependencies": {
         "@farcaster/auth-kit": "^0.2.1",
+        "@tanstack/react-query": "^5.28.9",
+        "frames.js": "^0.11.0",
+        "reactflow": "^11.10.4",
         "viem": "^2.9.5"
     }
 }
