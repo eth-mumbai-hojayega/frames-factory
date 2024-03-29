@@ -6,7 +6,7 @@ import connectDB from "../../lib/connectDB";
 export async function GET() {
   await connectDB();
   const frames = await Frame.find();
-  return new NextResponse(JSON.stringify({ message: "Frames gotten successfully", frames: frames }));
+  return new NextResponse(JSON.stringify({ frames }));
 }
 
 // post frame
@@ -18,5 +18,5 @@ export async function POST(req: NextRequest) {
     frameJson: frameJson,
   });
   await frame.save();
-  return new NextResponse(JSON.stringify({ message: "Frame saved successfully", frame: frame }));
+  return new NextResponse(JSON.stringify({ frame }));
 }

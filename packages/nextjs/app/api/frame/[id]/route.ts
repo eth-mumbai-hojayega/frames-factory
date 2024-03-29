@@ -9,5 +9,5 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   if (!frame) {
     return new NextResponse(JSON.stringify({ message: "Frame not found" }), { status: 404 });
   }
-  return new NextResponse(JSON.stringify({ message: "Frame gotten successfully", frame: frame }));
+  return new NextResponse(JSON.stringify({ frame }));
 }
