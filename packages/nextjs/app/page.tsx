@@ -8,6 +8,7 @@ import Card from "~~/components/Card";
 import fakeData from "~~/components/data/fakeData";
 import React, { useState } from 'react';
 import Modal from '~~/components/JourneyModal';
+import NodeModal from '~~/components/NodeModal';
 
 const Home: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
       </div>
 
       {/* Render the modal component */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <NodeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
