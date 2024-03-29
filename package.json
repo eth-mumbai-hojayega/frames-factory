@@ -51,6 +51,7 @@
         "frames.js": "^0.11.0",
         "mongoose": "^8.2.4",
         "reactflow": "^11.10.4",
+        "@heroicons/react": "v1",
         "viem": "^2.9.5"
     }
 }
