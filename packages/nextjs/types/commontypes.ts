@@ -13,7 +13,7 @@ export interface Journey {
   id: string;
   name: string;
   walletAddress: string;
-  journey: JourneyJson;
+  journeyJson: JourneyJson;
   desc?: string;
   image?: string;
   createdAt: string;
