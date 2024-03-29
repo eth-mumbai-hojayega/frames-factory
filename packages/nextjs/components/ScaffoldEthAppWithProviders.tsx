@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { AuthKitProvider } from "@farcaster/auth-kit";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTheme } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { ReactFlowProvider } from "reactflow";
@@ -13,6 +14,8 @@ import { Header } from "~~/components/Header";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { ProgressBar } from "~~/components/scaffold-eth/ProgressBar";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
+import { ProvideProduct } from "~~/providers/ProductProvider";
+import { ProvideJourneyForProductContext } from "~~/providers/ReactFlow";
 import { useGlobalState } from "~~/services/store/store";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 import { appChains } from "~~/services/web3/wagmiConnectors";
@@ -46,6 +49,7 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const ScaffoldEthAppWithProviders = ({ children }: { children: React.ReactNode }) => {
+  const [queryClient] = useState(() => new QueryClient());
   const { resolvedTheme } = useTheme();
   const isDarkMode = resolvedTheme === "dark";
   const [mounted, setMounted] = useState(false);
@@ -70,9 +74,15 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
           theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
         >
           <AuthKitProvider config={config}>
-            <ReactFlowProvider>
-              <ScaffoldEthApp>{children}</ScaffoldEthApp>
-            </ReactFlowProvider>
+            <QueryClientProvider client={queryClient}>
+              <ReactFlowProvider>
+                <ProvideProduct>
+                  <ProvideJourneyForProductContext>
+                    <ScaffoldEthApp>{children}</ScaffoldEthApp>
+                  </ProvideJourneyForProductContext>
+                </ProvideProduct>
+              </ReactFlowProvider>
+            </QueryClientProvider>
           </AuthKitProvider>
         </RainbowKitProvider>
       </WagmiConfig>

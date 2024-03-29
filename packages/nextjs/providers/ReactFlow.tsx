@@ -1,13 +1,13 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useProductJourney } from "./ProductProvider";
-import { randomUUID } from "crypto";
 import { useEdgesState, useNodesState } from "reactflow";
 import { Edge, Node, useReactFlow } from "reactflow";
+import { uuid } from "uuidv4";
 import { initialNodes } from "~~/components/reactflow/initialNodes";
 import { selectedNodeStyle } from "~~/components/reactflow/selectedNodeStyles";
 import { NodeData } from "~~/types/commontypes";
 
-interface IReactFlow {
+interface IJourneyForProduct {
   nodes: Node<NodeData>[];
   edges: Edge[];
   reactFlowWrapper: React.RefObject<HTMLDivElement>;
@@ -22,15 +22,16 @@ interface IReactFlow {
   deleteNode: (nodeId: string) => void;
   currentNode: Node<NodeData> | undefined;
   getNode: (nodeId: string) => Node<NodeData> | undefined;
+  onNodesChange: (nodes: Node<NodeData>[]) => void;
+  onEdgesChange: (edges: Edge[]) => void;
 }
 
-const ReactFlow = createContext<IReactFlow | null>(null);
+const JourneyForProductContext = createContext<IJourneyForProduct | null>(null);
 
-const useReactFlowProvider = () => {
+const useJourneyForProductContextProvider = () => {
   const { productQuery, productID, updateProduct } = useProductJourney();
-  const [nodes, setNodes] = useNodesState(initialNodes);
-  const [edges, setEdges] = useEdgesState([]);
-
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [currentNode, setCurrentNode] = useState<Node<NodeData>>();
 
   const reactFlowWrapper = useRef<HTMLDivElement | null>(null);
@@ -39,7 +40,7 @@ const useReactFlowProvider = () => {
   const { project, screenToFlowPosition } = useReactFlow();
 
   const onConnect = useCallback((params: any) => {
-    const id = randomUUID();
+    const id = uuid();
     const newEdge = {
       ...params,
       id: params?.source + params?.sourceHandle + id,
@@ -63,7 +64,7 @@ const useReactFlowProvider = () => {
         const boundingRect = reactFlowWrapper?.current ? reactFlowWrapper?.current.getBoundingClientRect() : null;
         if (!boundingRect) return;
         const { left } = boundingRect;
-        const nextId = randomUUID();
+        const nextId = uuid();
         const newNode = {
           id: nextId,
           type: "singlebutton",
@@ -81,7 +82,7 @@ const useReactFlowProvider = () => {
         setNodes(nodes => [...nodes, newNode]);
 
         const newEdge: Edge = {
-          id: randomUUID(),
+          id: uuid(),
           type: "special",
           source: connectingNodeId.current,
           target: nextId,
@@ -103,8 +104,8 @@ const useReactFlowProvider = () => {
       ..._node,
       data: {
         ..._node.data,
+        style: selectedNodeStyle,
       },
-      style: selectedNodeStyle,
     });
     const nodesMap = nodes.map(node => {
       if (node.id === _node.id) {
@@ -126,7 +127,6 @@ const useReactFlowProvider = () => {
     });
     setNodes(nodesMap);
   };
-
   const onNodeClick = (event: any, node: Node) => {
     const _node = getNode(node.id);
     if (!_node) return;
@@ -144,7 +144,7 @@ const useReactFlowProvider = () => {
   };
 
   const saveJourney = () => {
-    updateProduct.mutate({ journey: { nodes, edges } });
+    updateProduct.mutate({ journeyJson: { nodes, edges } });
   };
 
   const deleteNode = (nodeId: string) => {
@@ -152,12 +152,22 @@ const useReactFlowProvider = () => {
     setEdges(edges);
   };
 
+  const updateNodeInNodesArray = (nodeId: string, data: Partial<Node>) => {
+    const node = getNode(nodeId);
+    if (!node) return;
+    node.data = {
+      ...node.data,
+      ...data,
+    };
+    setNodes(nodes);
+  };
+
   useEffect(() => {
-    if (!productID || !productQuery.data) return;
-    const { nodes, edges } = productQuery.data.journey;
+    if (!productID || !productQuery.data || !productQuery.data?.journeyJson) return;
+    const { nodes, edges } = productQuery.data.journeyJson;
     setNodes(nodes);
     setEdges(edges);
-  }, [productID, productQuery.data, productQuery.data?.journey]);
+  }, [productID, productQuery.data, productQuery.data?.journeyJson]);
 
   return {
     nodes,
@@ -174,18 +184,21 @@ const useReactFlowProvider = () => {
     deleteNode,
     currentNode,
     getNode,
+    onNodesChange,
+    onEdgesChange,
+    updateNodeInNodesArray,
   };
 };
 
-export function ProvideReactFlow({ children }: PropsWithChildren<{}>) {
-  const value = useReactFlowProvider();
-  return <ReactFlow.Provider value={value}>{children}</ReactFlow.Provider>;
+export function ProvideJourneyForProductContext({ children }: PropsWithChildren<{}>) {
+  const value = useJourneyForProductContextProvider();
+  return <JourneyForProductContext.Provider value={value}>{children}</JourneyForProductContext.Provider>;
 }
 
-export const ReactFlowProvider = () => {
-  const context = useContext(ReactFlow);
+export const useJourneyForProduct = () => {
+  const context = useContext(JourneyForProductContext);
   if (context == null) {
-    throw "Ensure that the component is wrapped inside ReactFlowProvider";
+    throw "Ensure that the component is wrapped inside JourneyForProductContextProvider";
   }
   return context;
 };

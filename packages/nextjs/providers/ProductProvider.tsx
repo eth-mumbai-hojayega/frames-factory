@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { UseMutationResult, UseQueryResult, useMutation, useQuery } from "@tanstack/react-query";
 import { Journey } from "~~/types/commontypes";
 
@@ -12,10 +12,10 @@ interface IProductJourney {
 const ProductJourney = createContext<IProductJourney | null>(null);
 
 const useProduct = () => {
-  const URLQuery = useRouter().query;
+  const params = useParams();
   const productID = useMemo(() => {
-    return URLQuery.productID as string;
-  }, [URLQuery]);
+    return params.productID as string;
+  }, [params.productID]);
 
   const productQuery = useQuery({
     queryKey: ["product", productID],
@@ -26,6 +26,7 @@ const useProduct = () => {
       }
       return response.json();
     },
+    keepPreviousData: true,
   });
 
   const updateProduct = useMutation({
