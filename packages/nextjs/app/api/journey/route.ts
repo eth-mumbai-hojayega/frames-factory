@@ -6,7 +6,7 @@ import connectDB from "../../lib/connectDB";
 export async function GET() {
   await connectDB();
   const journeys = await Journey.find();
-  return new NextResponse(JSON.stringify({ journeys }));
+  return new NextResponse(JSON.stringify(journeys));
 }
 
 export async function POST(req: NextRequest) {
@@ -21,5 +21,5 @@ export async function POST(req: NextRequest) {
     image: image,
   });
   await journey.save();
-  return new NextResponse(JSON.stringify({ journey }));
+  return new NextResponse(JSON.stringify(journey));
 }

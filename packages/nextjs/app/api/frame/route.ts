@@ -18,5 +18,5 @@ export async function POST(req: NextRequest) {
     frameJson: frameJson,
   });
   await frame.save();
-  return new NextResponse(JSON.stringify({ frame }));
+  return new NextResponse(JSON.stringify(frame));
 }
