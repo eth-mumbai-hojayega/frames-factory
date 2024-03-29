@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const Frame = new mongoose.Schema({
+    name: String,
     frameJson: String,
 },
 {

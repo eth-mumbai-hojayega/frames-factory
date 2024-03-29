@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const Journey = new mongoose.Schema(
   {
-    WalletAddress: String,
-    ProductName: String,
-    StartingNode: String,
-    JourneyJson: String,
+    walletAddress: String,
+    name: String,
+    journeyJson: String,
+    desc: String,
+    image: String,
   },
   {
     timestamps: true,

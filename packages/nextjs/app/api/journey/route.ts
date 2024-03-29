@@ -12,12 +12,13 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   await connectDB();
   const payload = await req.json();
-  const { wallet_address, product_name, starting_node, journey_json } = payload;
+  const { walletAddress, name, journeyJson, desc, image } = payload;
   const journey = new Journey({
-    WalletAddress: wallet_address,
-    ProductName: product_name,
-    StartingNode: starting_node,
-    JourneyJson: journey_json,
+    walletAddress: walletAddress,
+    name: name,
+    journeyJson: journeyJson,
+    desc: desc,
+    image: image,
   });
   await journey.save();
   return new NextResponse(JSON.stringify({ message: "Frame saved successfully", journey: journey }));

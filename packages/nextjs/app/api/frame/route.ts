@@ -13,9 +13,9 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   await connectDB();
   const payload = await req.json();
-  const { frame_json } = payload;
+  const { frameJson } = payload;
   const frame = new Frame({
-    frameJson: frame_json,
+    frameJson: frameJson,
   });
   await frame.save();
   return new NextResponse(JSON.stringify({ message: "Frame saved successfully", frame: frame }));
