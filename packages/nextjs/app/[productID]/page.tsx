@@ -2,11 +2,15 @@
 
 import React from "react";
 import { NextPage } from "next";
+import NodeModal from "~~/components/NodeModal";
 import ReactFlow from "~~/components/reactflow";
 import { useJourneyForProduct } from "~~/providers/ReactFlow";
 
 const ProductPage: NextPage = () => {
   const {
+    open,
+    setOpen,
+    currentNode,
     onNodeClick,
     nodes,
     edges,
@@ -19,11 +23,11 @@ const ProductPage: NextPage = () => {
   } = useJourneyForProduct();
 
   return (
-    <div className="h-[100vh]">
+    <div className="flex h-[100vh]">
       <div
         style={{
           height: "90vh",
-          width: "50%",
+          width: "100%",
           background: "#F4F4F4",
           border: "none",
         }}
@@ -42,6 +46,14 @@ const ProductPage: NextPage = () => {
           onNodeClick={onNodeClick}
         />
       </div>
+
+      <NodeModal
+        key={currentNode?.id}
+        isOpen={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      />
     </div>
   );
 };

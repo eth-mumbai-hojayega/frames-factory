@@ -23,7 +23,7 @@ export interface Journey {
 export interface FrameJson {
   image: string;
   buttons: any[];
-  textInput?: string;
+  inputText?: string;
   state?: string;
   imageOptions?: string;
 }

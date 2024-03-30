@@ -6,6 +6,7 @@ import { uuid } from "uuidv4";
 import { initialNodes } from "~~/components/reactflow/initialNodes";
 import { selectedNodeStyle } from "~~/components/reactflow/selectedNodeStyles";
 import { NodeData } from "~~/types/commontypes";
+import { createFrame } from "~~/utils/apis";
 
 interface IJourneyForProduct {
   nodes: Node<NodeData>[];
@@ -17,19 +18,22 @@ interface IJourneyForProduct {
   onConnectStart: (event: any, { nodeId }: any) => void;
   onConnectEnd: (event: any) => void;
   onNodeClick: (event: any, node: Node) => void;
-  updateNode: (nodeId: string, data: Partial<Node>) => void;
+  updateNode: (nodeId: string, data: Partial<NodeData>) => void;
   saveJourney: () => void;
   deleteNode: (nodeId: string) => void;
   currentNode: Node<NodeData> | undefined;
   getNode: (nodeId: string) => Node<NodeData> | undefined;
   onNodesChange: (nodes: Node<NodeData>[]) => void;
   onEdgesChange: (edges: Edge[]) => void;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const JourneyForProductContext = createContext<IJourneyForProduct | null>(null);
 
 const useJourneyForProductContextProvider = () => {
   const { productQuery, productID, updateProduct } = useProductJourney();
+  const [open, setOpen] = useState(false);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [currentNode, setCurrentNode] = useState<Node<NodeData>>();
@@ -44,7 +48,6 @@ const useJourneyForProductContextProvider = () => {
     const newEdge = {
       ...params,
       id: params?.source + params?.sourceHandle + id,
-      type: "special",
       label: "Edge name",
     };
 
@@ -130,10 +133,11 @@ const useJourneyForProductContextProvider = () => {
   const onNodeClick = (event: any, node: Node) => {
     const _node = getNode(node.id);
     if (!_node) return;
+    setOpen(true);
     setSelectedNode(_node);
   };
 
-  const updateNode = (nodeId: string, data: Partial<Node>) => {
+  const updateNode = (nodeId: string, data: Partial<NodeData>) => {
     const node = getNode(nodeId);
     if (!node) return;
     node.data = {
@@ -150,16 +154,6 @@ const useJourneyForProductContextProvider = () => {
   const deleteNode = (nodeId: string) => {
     setNodes(nodes.filter((node: Node) => node.id !== nodeId));
     setEdges(edges);
-  };
-
-  const updateNodeInNodesArray = (nodeId: string, data: Partial<Node>) => {
-    const node = getNode(nodeId);
-    if (!node) return;
-    node.data = {
-      ...node.data,
-      ...data,
-    };
-    setNodes(nodes);
   };
 
   useEffect(() => {
@@ -186,7 +180,8 @@ const useJourneyForProductContextProvider = () => {
     getNode,
     onNodesChange,
     onEdgesChange,
-    updateNodeInNodesArray,
+    open,
+    setOpen,
   };
 };
 

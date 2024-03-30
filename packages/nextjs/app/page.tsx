@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       </div>
 
       {/* Render the modal component */}
-      <NodeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
