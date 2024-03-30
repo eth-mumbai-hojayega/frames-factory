@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Journey from "../../../model/journey";
 import connectDB from "../../lib/connectDB";
-import { useSearchParams } from 'next/navigation';
 
 // get all journeys
 export async function GET() {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Card from "~~/components/Card";
 import Modal from "~~/components/JourneyModal";
@@ -9,7 +9,7 @@ import { getAllJourneys } from "~~/utils/apis";
 
 const Home: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
-  const [journeys, setJourneys] = useState<any[]>([]); 
+  const [journeys, setJourneys] = useState<any[]>([]);
 
   const handleSelectItem = () => {
     setIsModalOpen(true); // Open the modal when the button is clicked
@@ -26,9 +26,9 @@ const Home: NextPage = () => {
         console.error("Error fetching journeys:", error);
       }
     };
-  
+
     fetchJourneys();
-  
+
     return () => setJourneys([]);
   }, []);
 
@@ -45,7 +45,13 @@ const Home: NextPage = () => {
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
           {journeys.map((journey: any) => (
-           <Card key={journey.key} id={journey._id} name={journey.name} image={journey.image} description={journey.desc} />
+            <Card
+              key={journey.key}
+              id={journey._id}
+              name={journey.name}
+              image={journey.image}
+              description={journey.desc}
+            />
           ))}
         </div>
       </div>

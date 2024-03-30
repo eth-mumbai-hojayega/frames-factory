@@ -28,7 +28,6 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   return new NextResponse(JSON.stringify(journey));
 }
 
-// delete journey
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   await connectDB();
   const journey_id = params.id;
@@ -37,4 +36,4 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     return new NextResponse(JSON.stringify({ message: "journey not found" }), { status: 404 });
   }
   return new NextResponse(JSON.stringify(journey));
-} 
+};

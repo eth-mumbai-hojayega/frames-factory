@@ -1,59 +1,64 @@
 {
-  "name": "se-2",
-  "version": "0.0.1",
-  "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/hardhat",
-      "packages/nextjs",
-      "packages/subgraph"
-    ]
-  },
-  "scripts": {
-    "account": "yarn workspace @se-2/hardhat account",
-    "chain": "yarn workspace @se-2/hardhat chain",
-    "fork": "yarn workspace @se-2/hardhat fork",
-    "flatten": "yarn workspace @se-2/hardhat flatten",
-    "deploy": "yarn workspace @se-2/hardhat deploy",
-    "verify": "yarn workspace @se-2/hardhat verify",
-    "hardhat-verify": "yarn workspace @se-2/hardhat hardhat-verify",
-    "compile": "yarn workspace @se-2/hardhat compile",
-    "generate": "yarn workspace @se-2/hardhat generate",
-    "hardhat:lint": "yarn workspace @se-2/hardhat lint",
-    "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
-    "hardhat:test": "yarn workspace @se-2/hardhat test",
-    "test": "yarn hardhat:test",
-    "subgraph:test": "yarn workspace @se-2/subgraph test",
-    "start": "yarn workspace @se-2/nextjs dev",
-    "next:lint": "yarn workspace @se-2/nextjs lint",
-    "next:format": "yarn workspace @se-2/nextjs format",
-    "next:check-types": "yarn workspace @se-2/nextjs check-types",
-    "postinstall": "husky install",
-    "precommit": "lint-staged",
-    "vercel": "yarn workspace @se-2/nextjs vercel",
-    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
-    "stop-node": "yarn workspace @se-2/subgraph stop-node",
-    "clean-node": "yarn workspace @se-2/subgraph clean-node",
-    "run-node": "yarn workspace @se-2/subgraph run-node",
-    "local-create": "yarn workspace @se-2/subgraph local-create",
-    "local-ship": "yarn workspace @se-2/subgraph local-ship",
-    "abi-copy": "yarn workspace @se-2/subgraph abi-copy",
-    "codegen": "yarn workspace @se-2/subgraph codegen"
-  },
-  "packageManager": "yarn@3.2.3",
-  "devDependencies": {
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3"
-  },
-  "dependencies": {
-    "@coinbase/onchainkit": "^0.11.0",
-    "@farcaster/auth-kit": "^0.2.1",
-    "@frames.js/render": "^0.0.2",
-    "@heroicons/react": "v1",
-    "@tanstack/react-query": "^5.28.9",
-    "frames.js": "^0.11.0",
-    "mongoose": "^8.2.4",
-    "reactflow": "^11.10.4",
-    "uuidv4": "^6.2.13"
-  }
+    "name": "se-2",
+    "version": "0.0.1",
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "packages/hardhat",
+            "packages/nextjs",
+            "packages/subgraph"
+        ]
+    },
+    "scripts": {
+        "account": "yarn workspace @se-2/hardhat account",
+        "chain": "yarn workspace @se-2/hardhat chain",
+        "fork": "yarn workspace @se-2/hardhat fork",
+        "flatten": "yarn workspace @se-2/hardhat flatten",
+        "deploy": "yarn workspace @se-2/hardhat deploy",
+        "verify": "yarn workspace @se-2/hardhat verify",
+        "hardhat-verify": "yarn workspace @se-2/hardhat hardhat-verify",
+        "compile": "yarn workspace @se-2/hardhat compile",
+        "generate": "yarn workspace @se-2/hardhat generate",
+        "hardhat:lint": "yarn workspace @se-2/hardhat lint",
+        "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
+        "hardhat:test": "yarn workspace @se-2/hardhat test",
+        "test": "yarn hardhat:test",
+        "subgraph:test": "yarn workspace @se-2/subgraph test",
+        "start": "yarn workspace @se-2/nextjs dev",
+        "next:lint": "yarn workspace @se-2/nextjs lint",
+        "next:format": "yarn workspace @se-2/nextjs format",
+        "next:check-types": "yarn workspace @se-2/nextjs check-types",
+        "postinstall": "husky install",
+        "precommit": "lint-staged",
+        "vercel": "yarn workspace @se-2/nextjs vercel",
+        "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo",
+        "stop-node": "yarn workspace @se-2/subgraph stop-node",
+        "clean-node": "yarn workspace @se-2/subgraph clean-node",
+        "run-node": "yarn workspace @se-2/subgraph run-node",
+        "local-create": "yarn workspace @se-2/subgraph local-create",
+        "local-ship": "yarn workspace @se-2/subgraph local-ship",
+        "abi-copy": "yarn workspace @se-2/subgraph abi-copy",
+        "codegen": "yarn workspace @se-2/subgraph codegen"
+    },
+    "packageManager": "yarn@3.2.3",
+    "devDependencies": {
+        "@types/react-html-parser": "^2",
+        "husky": "^8.0.1",
+        "lint-staged": "^13.0.3"
+    },
+    "dependencies": {
+        "@coinbase/onchainkit": "^0.11.0",
+        "@farcaster/auth-kit": "^0.2.1",
+        "@frames.js/render": "^0.0.2",
+        "@heroicons/react": "v1",
+        "@tanstack/react-query": "^5.28.9",
+        "frames.js": "^0.11.0",
+        "html-react-parser": "^5.1.10",
+        "jsdom": "^24.0.0",
+        "mongoose": "^8.2.4",
+        "react-html-parser": "^2.0.2",
+        "reactflow": "^11.10.4",
+        "uuidv4": "^6.2.13",
+        "viem": "^2.9.5"
+    }
 }

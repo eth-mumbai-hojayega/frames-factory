@@ -2,6 +2,8 @@ import Frame from "../../../../model/frame";
 import connectDB from "../../../lib/connectDB";
 import { frames } from "../../../lib/frames";
 import { Button } from "frames.js/next";
+import parse from 'html-react-parser';
+
 
 /* eslint-disable react/jsx-key */
 const handleRequest = frames(async ctx => {
@@ -10,7 +12,6 @@ const handleRequest = frames(async ctx => {
     const frameId = ctx.url.pathname.replace("/api/orchestrator/", "");
     const frame = await Frame.findById(frameId);
     const outputFrame = parseJsonToFrame(frame.frameJson);
-    console.log(outputFrame);
     return outputFrame;
   } catch (e) {
     return { image: <span>Error 404 Frame not found!</span>, buttons: [], input: "" };
@@ -27,11 +28,7 @@ const parseJsonToFrame = (frameJson: any) => {
       {button.label}
     </Button>
   ));
-  return {
-    image: image,
-    buttons: transformedButtons,
-    textInput: inputText,
-  };
+  return { image: parse(image) , buttons: transformedButtons, textInput: inputText };
 };
 
 export const GET = handleRequest;
