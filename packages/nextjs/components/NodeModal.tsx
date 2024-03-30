@@ -145,14 +145,13 @@ const FrameForm = () => {
 
   const handleSaveButton = (button: { action?: string; label: string; target?: string }) => {
     if (activeButtonIndex !== null) {
-      if (!button.label.trim()) {
-        alert("The label name will remain the same");
-      } else {
-        const updatedButtons = [...buttons];
-        updatedButtons[activeButtonIndex] = button;
-        setButtons(updatedButtons);
-        setActiveButtonIndex(null);
+      if (button.label === "") {
+        button.label = `Button ${activeButtonIndex + 1}`;
       }
+      const updatedButtons = [...buttons];
+      updatedButtons[activeButtonIndex] = button;
+      setButtons(updatedButtons);
+      setActiveButtonIndex(null);
     }
   };
 
@@ -171,15 +170,15 @@ const FrameForm = () => {
   return (
     <>
       <div className="flex">
-      <div className="block text-sm font-medium text-gray-700 mb-1 mr-2">Edit</div>
-      <input
-        id="theme-toggle"
-        type="checkbox"
-        className="toggle toggle-primary bg-primary hover:bg-primary border-primary"
-        onChange={() => setIsPreview(!isPreview)}
-        checked={isPreview}
-      />
-      <div className="block text-sm font-medium text-gray-700 mb-1 ml-2">Preview</div>
+        <div className="block text-sm font-medium text-gray-700 mb-1 mr-2">Edit</div>
+        <input
+          id="theme-toggle"
+          type="checkbox"
+          className="toggle toggle-primary bg-primary hover:bg-primary border-primary"
+          onChange={() => setIsPreview(!isPreview)}
+          checked={isPreview}
+        />
+        <div className="block text-sm font-medium text-gray-700 mb-1 ml-2">Preview</div>
       </div>
       <>
         {isPreview ? (
@@ -227,7 +226,7 @@ const FrameForm = () => {
                   key={index}
                   className="btn btn-primary"
                   onClick={() => handleButtonClick(index)}
-                  style={{ margin: '0.5rem' }} // Adjust the margin as needed
+                  style={{ margin: "0.5rem" }} // Adjust the margin as needed
                 >
                   {button.label}
                 </button>
@@ -236,17 +235,17 @@ const FrameForm = () => {
 
             {buttons.length < 4 && (
               <button onClick={handleAddButton} className="btn btn-primary w-40 mx-auto mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-6 h-6 mr-1"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              Add Button
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-6 h-6 mr-1"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Add Button
+              </button>
             )}
             <label htmlFor="additionalInput" className="block text-sm font-medium text-gray-700 mb-1">
               Enter Additional Input
