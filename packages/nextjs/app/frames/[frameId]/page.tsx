@@ -1,5 +1,6 @@
 import { fetchMetadata } from "frames.js/next";
 
+
 export async function generateMetadata({ params, searchParams }: any) {
   console.log(searchParams);
   const frameId = params.frameId;
