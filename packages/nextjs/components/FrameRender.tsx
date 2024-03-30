@@ -11,23 +11,37 @@ function FrameRender({ frame, submitOption, isLoggedIn }: FrameRenderProps) {
   const [inputText, setInputText] = useState("");
   const [isWaiting, setIsWaiting] = useState(false);
 
+  // Function to check if the input is HTML
+  const isHTML = (str) => {
+    const doc = new DOMParser().parseFromString(str, 'text/html');
+    return Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
+  };
+
   return (
     <div>
-      {/* <button onClick={() => setIsWaiting(false)} className="absolute top-2 right-1 text-gray-500 hover:text-gray-600 focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-        </svg>
-      </button> */}
-      <img
-        src={frame.image}
-        alt="Description of the image"
-        style={{
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-          width: "100%", // Set the width to 100%
-          height: "40vh", // Maintain aspect ratio
-        }}
-      />
+      {/* Conditional rendering based on whether the input is HTML or URL */}
+      {isHTML(frame.image) ? (
+        <div
+          dangerouslySetInnerHTML={{ __html: frame.image }}
+          style={{
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            width: "100%", // Set the width to 100%
+            height: "40vh", // Maintain aspect ratio
+          }}
+        />
+      ) : (
+        <img
+          src={frame.image}
+          alt="Description of the image"
+          style={{
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            width: "100%", // Set the width to 100%
+            height: "40vh", // Maintain aspect ratio
+          }}
+        />
+      )}
       {frame.inputText && (
         <input
           className="w-full p-2 border mt-1 border-gray-400 rounded bg-white" // Set background color to white
