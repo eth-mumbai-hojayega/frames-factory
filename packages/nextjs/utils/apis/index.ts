@@ -40,6 +40,12 @@ export const createProduct = async (data: Partial<Journey>) => {
   return product;
 };
 
+export const getAllJourneys = async () => {
+  const response = await fetch(`${API_URL}/journey`);
+  const journeys = await response.json();
+  return journeys;
+};
+
 export const createFrame = async (data: Partial<Frame>) => {
   const response = await fetch(`${API_URL}/frame`, {
     method: "POST",
