@@ -12,11 +12,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
   });
 
   return NextResponse.json({
-    chainId: "31337", // OP Mainnet 10
+    chainId: "11155111", // OP Mainnet 10
     method: "eth_sendTransaction",
     params: {
       abi: ProductSalesABI as Abi,
-      to: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      to: "0x49a33cb12a17e75e9Ffd17F28E78cc844b7066ea",
       data: result,
       value: "0x0",
     },
