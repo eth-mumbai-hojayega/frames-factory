@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ProductSales: {
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
       abi: [
         {
           anonymous: false,
@@ -45,9 +45,9 @@ const deployedContracts = {
             },
             {
               indexed: false,
-              internalType: "uint256",
+              internalType: "string",
               name: "productId",
-              type: "uint256",
+              type: "string",
             },
             {
               indexed: false,
@@ -81,9 +81,9 @@ const deployedContracts = {
           name: "sales",
           outputs: [
             {
-              internalType: "uint256",
+              internalType: "string",
               name: "productId",
-              type: "uint256",
+              type: "string",
             },
             {
               internalType: "uint256",
@@ -107,9 +107,9 @@ const deployedContracts = {
               type: "address",
             },
             {
-              internalType: "uint256",
+              internalType: "string",
               name: "_productId",
-              type: "uint256",
+              type: "string",
             },
             {
               internalType: "uint256",
@@ -144,24 +144,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address payable",
-              name: "_to",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_amount",
-              type: "uint256",
-            },
-          ],
-          name: "transferToAddress",
-          outputs: [],
-          stateMutability: "nonpayable",
           type: "function",
         },
       ],

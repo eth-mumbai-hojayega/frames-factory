@@ -25,9 +25,9 @@ export const ProductSalesABI = [
       },
       {
         indexed: false,
-        internalType: "uint256",
+        internalType: "string",
         name: "productId",
-        type: "uint256",
+        type: "string",
       },
       {
         indexed: false,
@@ -52,7 +52,7 @@ export const ProductSalesABI = [
     ],
     name: "sales",
     outputs: [
-      { internalType: "uint256", name: "productId", type: "uint256" },
+      { internalType: "string", name: "productId", type: "string" },
       { internalType: "uint256", name: "quantity", type: "uint256" },
       { internalType: "uint256", name: "amountPaid", type: "uint256" },
     ],
@@ -62,7 +62,7 @@ export const ProductSalesABI = [
   {
     inputs: [
       { internalType: "address", name: "_buyer", type: "address" },
-      { internalType: "uint256", name: "_productId", type: "uint256" },
+      { internalType: "string", name: "_productId", type: "string" },
       { internalType: "uint256", name: "_quantity", type: "uint256" },
       { internalType: "uint256", name: "_amountPaid", type: "uint256" },
     ],
@@ -78,14 +78,4 @@ export const ProductSalesABI = [
     stateMutability: "view",
     type: "function",
   },
-  {
-    inputs: [
-      { internalType: "address payable", name: "_to", type: "address" },
-      { internalType: "uint256", name: "_amount", type: "uint256" },
-    ],
-    name: "transferToAddress",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-] as const;
+];
