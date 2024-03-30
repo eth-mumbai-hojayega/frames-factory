@@ -34,7 +34,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         edges: [],
       },
     });
-    console.log(newProduct);
     router.push(`${newProduct._id}`);
   };
 

@@ -95,7 +95,24 @@ const NodeModal: React.FC<NodeModalProps> = ({ isOpen, onClose }) => {
 };
 
 export default NodeModal;
-
+export const handleGenerateJson = ({
+  buttons,
+  image,
+  inputText,
+}: {
+  buttons: any[];
+  image: string;
+  inputText: string;
+}) => {
+  const json: Frame = {
+    buttons: buttons,
+    version: "vNext",
+    image,
+    inputText,
+    postUrl: "https://zizzamia.xyz/api/frame",
+  };
+  return json;
+};
 const FrameForm = () => {
   const { currentNode, updateNode } = useJourneyForProduct();
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -139,22 +156,14 @@ const FrameForm = () => {
     }
   };
 
-  const handleGenerateJson = () => {
-    const json: Frame = {
-      buttons: buttons,
-      version: "vNext",
+  const saveFrame = async () => {
+    const frameToUpdate = handleGenerateJson({
+      buttons,
       image: imageUrl,
       inputText: additionalInput,
-      postUrl: "https://zizzamia.xyz/api/frame",
-    };
-    return json;
-  };
-
-  const saveFrame = async () => {
-    const frameToUpdate = handleGenerateJson();
-    console.log({ frameToUpdate });
+    });
     const response = await updateFrame(currentNode?.data.frameId as string, {
-      frameJson: frameToUpdate as FrameJson,
+      frameJson: frameToUpdate as Frame,
     });
     console.log({ response });
   };
@@ -177,7 +186,11 @@ const FrameForm = () => {
           <>
             <div className="mt-5 sm:mt-6">
               <FrameRender
-                frame={handleGenerateJson()} // Pass the generated JSON as props to FrameRender
+                frame={handleGenerateJson({
+                  buttons,
+                  image: imageUrl,
+                  inputText: additionalInput,
+                })} // Pass the generated JSON as props to FrameRender
                 isLoggedIn={true} // Assuming isLoggedIn is always true
                 submitOption={async () => {
                   await Promise.resolve();

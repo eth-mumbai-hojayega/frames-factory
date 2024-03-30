@@ -86,7 +86,6 @@ const useJourneyForProductContextProvider = () => {
 
         const newEdge: Edge = {
           id: uuid(),
-          type: "special",
           source: connectingNodeId.current,
           target: nextId,
           label: "Edge Name",
