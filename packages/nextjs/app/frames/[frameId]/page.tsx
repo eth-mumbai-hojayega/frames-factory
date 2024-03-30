@@ -8,8 +8,8 @@ export async function generateMetadata({ params, searchParams }: any) {
     // provide a full URL to your /frames endpoint
     other: await fetchMetadata(
       new URL(
-        "/api/orchestrator/" + frameId, 
-        process.env.VERCEL_URL ? `https://{process.env.VERCEL_URL}` : "http://localhost:3000",
+        "/api/orchestrator/" + frameId,
+        process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000",
       ),
     ),
   };

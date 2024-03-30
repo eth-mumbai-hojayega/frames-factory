@@ -59,6 +59,7 @@
         "react-html-parser": "^2.0.2",
         "reactflow": "^11.10.4",
         "uuidv4": "^6.2.13",
+        "vercel": "latest",
         "viem": "^2.9.5"
     }
 }
