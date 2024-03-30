@@ -16,7 +16,7 @@ interface Button {
   action: string;
   label: string;
   target: string;
-  postUrl?: string;
+  postUrl: string;
 }
 
 const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, initialValue }) => {
@@ -48,7 +48,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
       setAction(initialValue.action);
       setLabel(initialValue.label);
       setTarget(initialValue.target);
-      setPostUrl(initialValue.postUrl || "");
+      setPostUrl(initialValue.postUrl);
     }
   }, [initialValue]);
 
@@ -61,11 +61,15 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
   };
 
   const handleSave = () => {
-    onSave({ action, label, target, postUrl});
+    // Conditionally set the target based on the action
+    const updatedTarget = action === "tx" ? "tx" : target;
+    
+    // Call onSave with updated values
+    onSave({ action, label, target: updatedTarget, postUrl });
     handleClose();
   };
 
-  console.log(action, label, target, postUrl);
+  console.log(action, label, target);
 
   return (
     <div className={`fixed inset-0 z-50 overflow-y-auto ${isOpen ? "block" : "hidden"}`}>
@@ -125,20 +129,20 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
                   Target
                 </label>
                 <select
-  id="target"
-  value={target}
-  onChange={e => setTarget(e.target.value)}
-  className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
->
-  {action === "tx" ? (
-    <option value="tx">Transaction API</option>
-  ) : (
-    <>
-      <option value="">Select a frame</option>
-      {frameDataArr.map(frame => (
-        <option key={frame._id} value={frame._id}>
-          {frame.name}
-          {/* <FrameRender
+                  id="target"
+                  value={target}
+                  onChange={e => setTarget(e.target.value)}
+                  className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+                >
+                  {action === "tx" ? (
+                    <option value="tx">Transaction API</option>
+                  ) : (
+                    <>
+                      <option value="">Select a frame</option>
+                      {frameDataArr.map(frame => (
+                        <option key={frame._id} value={frame._id}>
+                          {frame.name}
+                          {/* <FrameRender
             frame={handleGenerateJson({
               buttons: frame.frameJson.buttons,
               image: frame.frameJson.image,
@@ -147,28 +151,28 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
             isLoggedIn={true}
             submitOption={() => Promise.resolve()}
           /> */}
-        </option>
-      ))}
-    </>
-  )}
-</select>
+                        </option>
+                      ))}
+                    </>
+                  )}
+                </select>
 
-{action === "tx" && (
-  <div className="mt-2">
-    <label htmlFor="postUrl" className="block text-sm font-medium text-gray-700 mb-1">
-      Post URL
-    </label>
-    <select
-      id="postUrl"
-      value={postUrl}
-      onChange={e => setPostUrl(e.target.value)}
-      className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
-    >
-      <option value="">Select a frame</option>
-      {frameDataArr.map(frame => (
-        <option key={frame._id} value={frame._id}>
-          {frame.name}
-          {/* <FrameRender
+                {action === "tx" && (
+                  <div className="mt-2">
+                    <label htmlFor="postUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                      Post URL
+                    </label>
+                    <select
+                      id="postUrl"
+                      value={postUrl}
+                      onChange={e => setPostUrl(e.target.value)}
+                      className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+                    >
+                      <option value="">Select a frame</option>
+                      {frameDataArr.map(frame => (
+                        <option key={frame._id} value={frame._id}>
+                          {frame.name}
+                          {/* <FrameRender
             frame={handleGenerateJson({
               buttons: frame.frameJson.buttons,
               image: frame.frameJson.image,
@@ -177,12 +181,11 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
             isLoggedIn={true}
             submitOption={() => Promise.resolve()}
           /> */}
-        </option>
-      ))}
-    </select>
-  </div>
-)}
-
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
             </div>
 
