@@ -10,9 +10,9 @@ const handleRequest = frames(async ctx => {
     const frameId = ctx.url.pathname.replace("/api/orchestrator/", "");
     const frame = await Frame.findById(frameId);
     const outputFrame = parseJsonToFrame(frame.frameJson);
+    console.log(outputFrame);
     return outputFrame;
   } catch (e) {
-    console.error(e);
     return { image: <span>Error 404 Frame not found!</span>, buttons: [], input: "" };
   }
 });
@@ -20,7 +20,7 @@ const handleRequest = frames(async ctx => {
 const parseJsonToFrame = (frameJson: any) => {
   const { buttons, image, inputText } = frameJson;
   const transformedButtons = buttons.map((button: any) => (
-    <Button action={button?.action} target={{ pathname: `/${button?.target}`, query: { value: button?.query } }}>
+    <Button action="post" target={{ pathname: `/${button?.target}`, query: { value: button?.query } }}>
       {button.label}
     </Button>
   ));
@@ -28,6 +28,7 @@ const parseJsonToFrame = (frameJson: any) => {
     image: image,
     buttons: transformedButtons,
     textInput: inputText,
+    version: "vNext",
   };
 };
 
