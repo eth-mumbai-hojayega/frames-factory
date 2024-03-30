@@ -65,7 +65,7 @@ const NodeModal: React.FC<NodeModalProps> = ({ isOpen, onClose }) => {
           </button>
           <div>
             <label htmlFor="nodeName" className="block text-sm font-medium text-gray-700 mb-1">
-              Enter Name Node
+              Enter a name for the Frame
             </label>
             <input
               id="nodeName"
