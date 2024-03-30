@@ -20,6 +20,7 @@ const generatedContractComment = `
 const DEPLOYMENTS_DIR = "./deployments";
 const ARTIFACTS_DIR = "./artifacts";
 
+const TARGET_DIR = "../nextjs/contracts/";
 function getDirectories(path: string) {
   return fs
     .readdirSync(path, { withFileTypes: true })
@@ -89,6 +90,15 @@ function getContractDataFromDeployments() {
       );
       const inheritedFunctions = getInheritedFunctions(JSON.parse(metadata).sources, contractName);
       contracts[contractName] = { address, abi, inheritedFunctions };
+      if (!fs.existsSync(TARGET_DIR)) {
+        fs.mkdirSync(TARGET_DIR);
+      }
+      fs.writeFileSync(
+        `${TARGET_DIR}${contractName}ABI.ts`,
+        prettier.format(`export const ${contractName}ABI = ${JSON.stringify(abi)};`, {
+          parser: "typescript",
+        }),
+      );
     }
     output[chainId] = contracts;
   }
@@ -100,7 +110,6 @@ function getContractDataFromDeployments() {
  * This script should be run last.
  */
 const generateTsAbis: DeployFunction = async function () {
-  const TARGET_DIR = "../nextjs/contracts/";
   const allContractsData = getContractDataFromDeployments();
 
   const fileContent = Object.entries(allContractsData).reduce((content, [chainId, chainConfig]) => {
