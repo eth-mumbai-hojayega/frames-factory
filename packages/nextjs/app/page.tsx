@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Card from "~~/components/Card";
-import NodeModal from "~~/components/NodeModal";
+import Modal from "~~/components/JourneyModal";
 import fakeData from "~~/components/data/fakeData";
-import ReactFlow from "~~/components/reactflow";
-import { Address } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility

@@ -9,6 +9,7 @@ interface ButtonModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (button: Button) => void;
+  intialValue: Button;
 }
 
 interface Button {
@@ -17,7 +18,7 @@ interface Button {
   target: string;
 }
 
-const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave }) => {
+const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, initialValue }) => {
   const { currentNode, nodes, edges } = useJourneyForProduct();
   const [frameDataArr, setFrameDataArr] = useState<Frame[]>([]);
   useEffect(() => {
@@ -39,6 +40,14 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave }) =>
   const [action, setAction] = useState("");
   const [label, setLabel] = useState("");
   const [target, setTarget] = useState("");
+
+  useEffect(() => {
+    if (initialValue) {
+      setAction(initialValue.action);
+      setLabel(initialValue.label);
+      setTarget(initialValue.target);
+    }
+  }, [initialValue]);
 
   const handleClose = () => {
     setAction("");
