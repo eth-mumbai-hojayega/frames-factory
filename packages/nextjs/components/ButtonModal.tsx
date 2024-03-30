@@ -112,6 +112,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave }) =>
                   onChange={e => setTarget(e.target.value)}
                   className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
                 >
+                  <option value="">Select a frame</option>
                   {frameDataArr.map(frame => (
                     <option key={frame._id} value={frame._id}>
                       {frame.name}
