@@ -6,7 +6,7 @@ export async function generateMetadata({ params, searchParams }: any) {
   return {
     title: "Frames",
     // provide a full URL to your /frames endpoint
-    other: await fetchMetadata(new URL("/api/orchestrator/" + frameId, "https://frames-hojayega.vercel.app/")),
+    other: await fetchMetadata(new URL("/api/orchestrator/" + frameId, "https://frames-hojayega.vercel.app")),
   };
 }
 

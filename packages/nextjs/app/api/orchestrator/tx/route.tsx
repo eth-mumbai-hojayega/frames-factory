@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { TransactionTargetResponse } from "frames.js";
+import { getFrameMessage } from "frames.js/next/server";
 import { Abi, createPublicClient, encodeFunctionData, http, parseEther } from "viem";
-import { hardhat } from "viem/chains";
 import { ProductSalesABI } from "~~/contracts/ProductSalesABI";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest): Promise<NextResponse<TransactionTargetResponse>> {
+  const json = await req.json();
+
+  const frameMessage = await getFrameMessage(json);
+
+  if (!frameMessage) {
+    throw new Error("No frame message");
+  }
   /// @ts-expect-error
   const result = await encodeFunctionData({
     abi: ProductSalesABI,
