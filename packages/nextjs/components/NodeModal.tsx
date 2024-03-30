@@ -161,6 +161,8 @@ const FrameForm = () => {
 
   return (
     <>
+      <div className="flex">
+      <div className="block text-sm font-medium text-gray-700 mb-1 mr-2">Edit</div>
       <input
         id="theme-toggle"
         type="checkbox"
@@ -168,6 +170,8 @@ const FrameForm = () => {
         onChange={() => setIsPreview(!isPreview)}
         checked={isPreview}
       />
+      <div className="block text-sm font-medium text-gray-700 mb-1 ml-2">Preview</div>
+      </div>
       <>
         {isPreview ? (
           <>
@@ -201,26 +205,35 @@ const FrameForm = () => {
               placeholder="Image URL"
               className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
             />
-            <div className="flex mb-4">
+            <label htmlFor="buttons" className="block text-sm font-medium text-gray-700 mb-1">
+              Add Required Number of Buttons
+            </label>
+            <div className="flex flex-wrap gap-1 mb-4">
               {buttons.map((button, index) => (
-                <button className="btn btn-primary" onClick={() => handleButtonClick(index)}>
+                <button
+                  key={index}
+                  className="btn btn-primary"
+                  onClick={() => handleButtonClick(index)}
+                  style={{ margin: '0.5rem' }} // Adjust the margin as needed
+                >
                   {button.label}
                 </button>
               ))}
             </div>
+
             {buttons.length < 4 && (
-              <button onClick={handleAddButton} className="btn btn-primary w-full mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="w-6 h-6 mr-1"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                Add Button
-              </button>
+              <button onClick={handleAddButton} className="btn btn-primary w-40 mx-auto mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-6 h-6 mr-1"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Add Button
+            </button>
             )}
             <label htmlFor="additionalInput" className="block text-sm font-medium text-gray-700 mb-1">
               Enter Additional Input
