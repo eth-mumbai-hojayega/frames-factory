@@ -61,6 +61,8 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
     handleClose();
   };
 
+  console.log(action, label, target)
+
   return (
     <div className={`fixed inset-0 z-50 overflow-y-auto ${isOpen ? "block" : "hidden"}`}>
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -90,17 +92,19 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
             </button>
             <div>
               <div className="mt-2">
-                <label htmlFor="action" className="block text-sm font-medium text-gray-700 mb-1">
-                  Action
-                </label>
-                <input
-                  id="action"
-                  type="text"
-                  value={action}
-                  onChange={e => setAction(e.target.value)}
-                  placeholder="Action"
-                  className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
-                />
+              <label htmlFor="action" className="block text-sm font-medium text-gray-700 mb-1">
+                Action
+              </label>
+              <select
+                id="action"
+                value={action}
+                onChange={e => setAction(e.target.value)}
+                className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+              >
+                <option value="post">Post</option>
+                <option value="redirect">Redirect</option>
+              </select>
+
                 <label htmlFor="label" className="block text-sm font-medium text-gray-700 mb-1">
                   Label
                 </label>

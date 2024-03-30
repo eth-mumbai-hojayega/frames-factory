@@ -120,6 +120,9 @@ const FrameForm = () => {
   const [buttons, setButtons] = useState<{ action?: string; label: string; target?: string }[]>([]);
   const [activeButtonIndex, setActiveButtonIndex] = useState<number | null>(null);
   const [isPreview, setIsPreview] = useState(false);
+  const [imageUrlOption, setImageUrlOption] = useState("url"); // State to track the selected option
+  // const [imageUrl, setImageUrl] = useState(""); // State to store the entered image URL
+  const [htmlCode, setHtmlCode] = useState<string>(""); // State to store the entered HTML code
 
   useEffect(() => {
     const fetchData = async () => {
@@ -198,7 +201,7 @@ const FrameForm = () => {
               <button
                 onClick={saveFrame}
                 type="button"
-                className="inline-flex justify-center w-full border border-transparent px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
+                className="inline-flex justify-center w-full border border-transparent mt-2 px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
               >
                 Save Frame
               </button>
@@ -206,17 +209,34 @@ const FrameForm = () => {
           </>
         ) : (
           <>
+            <label htmlFor="imageInput" className="block text-sm font-medium text-gray-700 mb-1 mt-2">
+              Select Input Type
+            </label>
+            <select
+              id="imageInput"
+              value={imageUrlOption}
+              onChange={(e) => {
+                setImageUrlOption(e.target.value);
+                setImageUrl(""); // Clear the input box value when the dropdown selection changes
+              }}
+              className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+            >
+              <option value="url">Image</option>
+              <option value="html">HTML</option>
+            </select>
+
             <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">
-              Enter Image URL
+              {imageUrlOption === "url" ? "Enter Image URL" : "Enter HTML Code"}
             </label>
             <input
               id="imageUrl"
               type="text"
               value={imageUrl}
               onChange={e => setImageUrl(e.target.value)}
-              placeholder="Image URL"
+              placeholder={imageUrlOption === "url" ? "Image URL" : "HTML Code"}
               className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
             />
+
             <label htmlFor="buttons" className="block text-sm font-medium text-gray-700 mb-1">
               Add Required Number of Buttons
             </label>
@@ -258,6 +278,13 @@ const FrameForm = () => {
               placeholder="Additional Input"
               className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
             />
+            <button
+                onClick={saveFrame}
+                type="button"
+                className="inline-flex justify-center w-full border border-transparent mt-2 px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
+              >
+                Save Frame
+              </button>
           </>
         )}
       </>

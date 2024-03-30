@@ -32,7 +32,6 @@ const Home: NextPage = () => {
     return () => setJourneys([]);
   }, []);
 
-
   return (
     <div className="">
       <div className="flex justify-center my-4">
@@ -46,7 +45,7 @@ const Home: NextPage = () => {
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
           {journeys.map((journey: any) => (
-            <Card name={journey.name} image={journey.image} description={journey.desc} />
+           <Card key={journey.key} id={journey._id} name={journey.name} image={journey.image} description={journey.desc} />
           ))}
         </div>
       </div>
