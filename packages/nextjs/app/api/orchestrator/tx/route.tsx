@@ -6,6 +6,7 @@ import { ProductSalesABI } from "~~/contracts/ProductSalesABI";
 
 export async function POST(req: NextRequest): Promise<NextResponse<TransactionTargetResponse>> {
   const json = await req.json();
+  console.log("HELLO");
 
   const frameMessage = await getFrameMessage(json);
 
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TransactionTa
     functionName: "sellProduct",
     args: ["0xf35239d2c73c1f0e1E5ee8D174E0479a4040c26C", "66082d4fb3d9263bbcbc3e35", 1, parseEther("0.01")],
   });
+  console.log(result);
 
   return NextResponse.json({
     chainId: "11155111", // OP Mainnet 10

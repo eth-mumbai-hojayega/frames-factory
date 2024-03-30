@@ -61,7 +61,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
     handleClose();
   };
 
-  console.log(action, label, target)
+  console.log(action, label, target);
 
   return (
     <div className={`fixed inset-0 z-50 overflow-y-auto ${isOpen ? "block" : "hidden"}`}>
@@ -92,19 +92,19 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
             </button>
             <div>
               <div className="mt-2">
-              <label htmlFor="action" className="block text-sm font-medium text-gray-700 mb-1">
-                Action
-              </label>
-              <select
-                id="action"
-                value={action}
-                onChange={e => setAction(e.target.value)}
-                className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
-              >
-                <option value="post">Post</option>
-                <option value="redirect">Redirect</option>
-                {/* <option value="tx">Transaction</option> */}
-              </select>
+                <label htmlFor="action" className="block text-sm font-medium text-gray-700 mb-1">
+                  Action
+                </label>
+                <select
+                  id="action"
+                  value={action}
+                  onChange={e => setAction(e.target.value)}
+                  className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+                >
+                  <option value="post">Post</option>
+                  <option value="redirect">Redirect</option>
+                  <option value="tx">Transaction</option>
+                </select>
 
                 <label htmlFor="label" className="block text-sm font-medium text-gray-700 mb-1">
                   Label
@@ -127,7 +127,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
                   className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
                 >
                   <option value="">Select a frame</option>
-                  <option value="tx">Transaction</option>
+                  <option value="tx">Transaction API</option>
                   {frameDataArr.map(frame => (
                     <option key={frame._id} value={frame._id}>
                       {frame.name}

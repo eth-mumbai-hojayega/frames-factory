@@ -39,16 +39,17 @@ const handleRequest = frames(async ctx => {
 });
 
 const parseJsonToFrame = (frameJson: any) => {
-  const { buttons, image, inputText } = frameJson;
+  const { buttons, image, inputText, postUrl } = frameJson
   const transformedButtons = buttons.map((button: any) => (
     <Button
       action={button.action ? button.action : "post"}
       target={{ pathname: `/${button?.target}`, query: { value: button?.query } }}
+      post_url={"/frames/123"}
     >
       {button.label}
     </Button>
   ));
-  return { image: parse(image) , buttons: transformedButtons, textInput: inputText };
+  return { image: parse(image) , buttons: transformedButtons, textInput: inputText, postUrl: postUrl };
 };
 
 export const GET = handleRequest;
