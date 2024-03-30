@@ -16,7 +16,7 @@ contract ProductSales {
     event ProductSold(address indexed buyer, string productId, uint256 quantity, uint256 amountPaid);
     event FundsTransferred(address indexed from, address indexed to, uint256 amount);
 
-    function sellProduct(address payable _seller, string memory _productId, uint256 _quantity) external payable {
+    function sellProduct(address _seller, string memory _productId, uint256 _quantity) external payable {
         uint256 requiredAmount = calculatePrice(_quantity);
         address _buyer = msg.sender;
         require(msg.value >= requiredAmount, "Insufficient funds sent");
@@ -28,7 +28,7 @@ contract ProductSales {
         totalSales[_buyer] += requiredAmount;
 
         emit ProductSold(_buyer, _productId, _quantity, requiredAmount);
-        transferToAddress(_seller, requiredAmount);
+        transferToAddress(payable(_seller), requiredAmount);
     }
 
     function transferToAddress(address payable _to, uint256 _amount) internal {

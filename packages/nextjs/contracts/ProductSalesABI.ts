@@ -78,4 +78,4 @@ export const ProductSalesABI = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;

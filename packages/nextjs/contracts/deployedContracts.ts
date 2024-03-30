@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   10: {
     ProductSales: {
-      address: "0xD724f64841917465AF364B6858D60xD724f64841917465AF364B6858D6eD7E3765D0ebeD7E3765D0eb",
+      address: "0xa0556a7c13f94F1A7cEC579a4adBBd9a9FCEbA0d",
       abi: [
         {
           anonymous: false,
@@ -102,7 +102,7 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address payable",
+              internalType: "address",
               name: "_seller",
               type: "address",
             },
