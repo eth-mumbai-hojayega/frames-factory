@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ButtonModal from "./ButtonModal";
 import { useJourneyForProduct } from "~~/providers/ReactFlow";
 import { createFrame } from "~~/utils/apis";
+import FrameRender from './FrameRender'; // Import the FrameRender component
+import { Frame } from "frames.js"; // Import the Frame type
 
 interface NodeModalProps {
   isOpen: boolean;
@@ -106,28 +108,30 @@ const FrameForm = () => {
   };
 
   const handleSaveButton = (button: { action?: string; label: string; target?: string }) => {
-    if (activeButtonIndex !== null) {
+  if (activeButtonIndex !== null) {
+    if (!button.label.trim()) {
+      alert("The label name will remain the same");
+    } else {
       const updatedButtons = [...buttons];
       updatedButtons[activeButtonIndex] = button;
       setButtons(updatedButtons);
       setActiveButtonIndex(null);
     }
-  };
+  }
+};
 
   const handleGenerateJson = () => {
-    const json = {
+    const json: Frame = {
       buttons: buttons,
-      image: {
-        src: imageUrl,
-        aspectRatio: "1:1",
-      },
-      input: {
-        text: currentNode?.data?.label,
-      },
+      version: "vNext",
+      image: imageUrl,
+      inputText: additionalInput,
       postUrl: "https://zizzamia.xyz/api/frame",
     };
-    console.log(JSON.stringify(json, null, 2));
+    return json
   };
+
+  console.log(handleGenerateJson());
 
   return (
     <>
@@ -142,6 +146,12 @@ const FrameForm = () => {
         {isPreview ? (
           <>
             <div className="mt-5 sm:mt-6">
+              <FrameRender 
+          frame={handleGenerateJson()} // Pass the generated JSON as props to FrameRender
+          isLoggedIn={true} // Assuming isLoggedIn is always true
+          submitOption={async () => {
+            await Promise.resolve();
+          }} />
               <button
                 onClick={handleGenerateJson}
                 type="button"
@@ -208,5 +218,19 @@ const FrameForm = () => {
         />
       )}
     </>
+
+    //   {/* Render the FrameRenderModal if isFrameRenderModalOpen is true */}
+    //   {isFrameRenderModalOpen && (
+    //     <FrameRender
+    //     isOpen={true}
+    //       frame={generatedJson} // Pass the generated JSON as props to FrameRender
+    //       isLoggedIn={true} // Assuming isLoggedIn is always true
+    //       onClose={() => setIsFrameRenderModalOpen(false)} // Close the FrameRender modal
+    //       submitOption={async () => {
+    //         await Promise.resolve();
+    //       }}
+    //     />
+    //   )}
+    // </div>
   );
 };
