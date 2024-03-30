@@ -9,7 +9,7 @@ interface ButtonModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (button: Button) => void;
-  intialValue: Button;
+  initialValue: Button;
 }
 
 interface Button {
@@ -28,7 +28,6 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
 
       try {
         const frameDataArr = await getChildNodesFromEdgeBasedOnNodeID(currentNode.id, edges, nodes);
-        console.log("frameDataArr", frameDataArr);
         setFrameDataArr(frameDataArr);
       } catch (error) {
         console.error("Error fetching frame data:", error);
@@ -52,6 +51,13 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
     }
   }, [initialValue]);
 
+  useEffect(() => {
+    // Clear postUrl when action changes to "transaction" or "post_redirect"
+    if (action === "tx" || action === "post_redirect") {
+      setPostUrl("");
+    }
+  }, [action]);
+
   const handleClose = () => {
     setAction("");
     setLabel("");
@@ -61,11 +67,9 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
   };
 
   const handleSave = () => {
-    onSave({ action, label, target, postUrl});
+    onSave({ action, label, target, postUrl });
     handleClose();
   };
-
-  console.log(action, label, target, postUrl);
 
   return (
     <div className={`fixed inset-0 z-50 overflow-y-auto ${isOpen ? "block" : "hidden"}`}>
@@ -106,7 +110,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
                   className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
                 >
                   <option value="post">Post</option>
-                  <option value="redirect">Redirect</option>
+                  <option value="post_redirect">Redirect</option>
                   <option value="tx">Transaction</option>
                 </select>
 
@@ -121,68 +125,70 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
                   placeholder="Label"
                   className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
                 />
-                <label htmlFor="target" className="block text-sm font-medium text-gray-700 mb-1">
-                  Target
-                </label>
-                <select
-  id="target"
-  value={target}
-  onChange={e => setTarget(e.target.value)}
-  className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
->
-  {action === "tx" ? (
-    <option value="tx">Transaction API</option>
-  ) : (
-    <>
-      <option value="">Select a frame</option>
-      {frameDataArr.map(frame => (
-        <option key={frame._id} value={frame._id}>
-          {frame.name}
-          {/* <FrameRender
-            frame={handleGenerateJson({
-              buttons: frame.frameJson.buttons,
-              image: frame.frameJson.image,
-              inputText: typeof frame.frameJson.inputText === "string" ? frame.frameJson.inputText : "",
-            })}
-            isLoggedIn={true}
-            submitOption={() => Promise.resolve()}
-          /> */}
-        </option>
-      ))}
-    </>
-  )}
-</select>
+                
+                {action !== "post_redirect" && (
+                  <>
+                    <label htmlFor="target" className="block text-sm font-medium text-gray-700 mb-1">
+                      Target
+                    </label>
+                    <select
+                      id="target"
+                      value={target}
+                      onChange={e => setTarget(e.target.value)}
+                      className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+                    >
+                      {action === "tx" ? (
+                        <option value="tx">Transaction API</option>
+                      ) : (
+                        <>
+                          <option value="">Select a frame</option>
+                          {frameDataArr.map(frame => (
+                            <option key={frame._id} value={frame._id}>
+                              {frame.name}
+                            </option>
+                          ))}
+                        </>
+                      )}
+                    </select>
+                  </>
+                )}
 
-{action === "tx" && (
-  <div className="mt-2">
-    <label htmlFor="postUrl" className="block text-sm font-medium text-gray-700 mb-1">
-      Post URL
-    </label>
-    <select
-      id="postUrl"
-      value={postUrl}
-      onChange={e => setPostUrl(e.target.value)}
-      className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
-    >
-      <option value="">Select a frame</option>
-      {frameDataArr.map(frame => (
-        <option key={frame._id} value={frame._id}>
-          {frame.name}
-          {/* <FrameRender
-            frame={handleGenerateJson({
-              buttons: frame.frameJson.buttons,
-              image: frame.frameJson.image,
-              inputText: typeof frame.frameJson.inputText === "string" ? frame.frameJson.inputText : "",
-            })}
-            isLoggedIn={true}
-            submitOption={() => Promise.resolve()}
-          /> */}
-        </option>
-      ))}
-    </select>
-  </div>
-)}
+                {action === "tx" && (
+                  <div className="mt-2">
+                    <label htmlFor="postUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                      Post URL
+                    </label>
+                    <select
+                      id="postUrl"
+                      value={postUrl}
+                      onChange={e => setPostUrl(e.target.value)}
+                      className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+                    >
+                      <option value="">Select a frame</option>
+                      {frameDataArr.map(frame => (
+                        <option key={frame._id} value={frame._id}>
+                          {frame.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
+                {action === "post_redirect" && (
+                  <div className="mt-2">
+                    <label htmlFor="postUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                      Post URL
+                    </label>
+                    <input
+                      id="postUrl"
+                      type="text"
+                      value={postUrl}
+                      onChange={e => setPostUrl(e.target.value)}
+                      placeholder="Post URL"
+                      className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 

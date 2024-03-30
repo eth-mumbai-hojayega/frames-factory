@@ -109,7 +109,7 @@ export const handleGenerateJson = ({
     version: "vNext",
     image,
     inputText,
-    postUrl: "https://zizzamia.xyz/api/frame",
+    postUrl: "https://codeshare.io/dhruv",
   };
   return json;
 };
