@@ -1,6 +1,6 @@
 import { Frame, Journey } from "~~/types/commontypes";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = process.env.VERCEL_URL ? `https://{process.env.VERCEL_URL}/api` : "http://localhost:3000/api";
 
 export const getProductById = async (id: string) => {
   const response = await fetch(`${API_URL}/journey/${id}`);
