@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Card from "~~/components/Card";
-import Modal from "~~/components/JourneyModal";
+import NodeModal from "~~/components/NodeModal";
 import fakeData from "~~/components/data/fakeData";
 import ReactFlow from "~~/components/reactflow";
 import { Address } from "~~/components/scaffold-eth";
