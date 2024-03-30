@@ -12,7 +12,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   await connectDB();
   const payload = await req.json();
-  const { walletAddress, name, journeyJson, desc, image } = payload;
+  const { walletAddress, name, journeyJson, desc, image, startingFrameURL } = payload;
   console.log("payload", payload);
   const journey = new Journey({
     walletAddress: walletAddress,
@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
     journeyJson: journeyJson,
     desc: desc,
     image: image,
+    startingFrameURL: startingFrameURL,
   });
   await journey.save();
   return new NextResponse(JSON.stringify(journey));

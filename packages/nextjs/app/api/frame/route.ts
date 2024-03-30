@@ -13,7 +13,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   await connectDB();
   const payload = await req.json();
-  console.log(payload);
   const { frameJson, name } = payload;
   const frame = new Frame({
     name,

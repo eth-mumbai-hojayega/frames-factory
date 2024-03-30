@@ -8,6 +8,7 @@ interface JourneyDocument extends Document {
   journeyJson: JourneyType;
   desc?: string;
   image?: string;
+  startingFrameURL?: string;
 }
 
 // Define the Journey schema

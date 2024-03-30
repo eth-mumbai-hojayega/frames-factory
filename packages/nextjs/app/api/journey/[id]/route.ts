@@ -16,10 +16,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   await connectDB();
   const journey_id = params.id;
   const payload = await req.json();
-  const { walletAddress, name, journeyJson, desc, image } = payload;
+  const { walletAddress, name, journeyJson, desc, image, startingFrameURL } = payload;
   const journey = await Journey.findByIdAndUpdate(
     journey_id,
-    { walletAddress, name, journeyJson, desc, image },
+    { walletAddress, name, journeyJson, desc, image, startingFrameURL },
     { new: true },
   );
   if (!journey) {

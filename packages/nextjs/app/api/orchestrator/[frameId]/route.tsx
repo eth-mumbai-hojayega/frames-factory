@@ -20,7 +20,10 @@ const handleRequest = frames(async ctx => {
 const parseJsonToFrame = (frameJson: any) => {
   const { buttons, image, inputText } = frameJson;
   const transformedButtons = buttons.map((button: any) => (
-    <Button action="post" target={{ pathname: `/${button?.target}`, query: { value: button?.query } }}>
+    <Button
+      action={button.action ? button.action : "post"}
+      target={{ pathname: `/${button?.target}`, query: { value: button?.query } }}
+    >
       {button.label}
     </Button>
   ));
@@ -28,7 +31,6 @@ const parseJsonToFrame = (frameJson: any) => {
     image: image,
     buttons: transformedButtons,
     textInput: inputText,
-    version: "vNext",
   };
 };
 
