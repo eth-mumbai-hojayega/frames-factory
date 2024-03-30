@@ -1,3 +1,4 @@
+import { Frame as FrameType } from "frames.js";
 import { Edge, Node } from "reactflow";
 
 export interface NodeData {
@@ -20,16 +21,8 @@ export interface Journey {
   updatedAt: string;
 }
 
-export interface FrameJson {
-  image: string;
-  buttons: any[];
-  inputText?: string;
-  state?: string;
-  imageOptions?: string;
-}
-
 export interface Frame {
   _id: string;
   name: string;
-  frameJson: FrameJson;
+  frameJson: FrameType;
 }

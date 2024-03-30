@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ButtonModal from "./ButtonModal";
+import FrameRender from "./FrameRender";
+// Import the FrameRender component
+import { Frame, FrameButton } from "frames.js";
 import { useJourneyForProduct } from "~~/providers/ReactFlow";
-import { createFrame } from "~~/utils/apis";
-import FrameRender from './FrameRender'; // Import the FrameRender component
-import { Frame } from "frames.js"; // Import the Frame type
+import { FrameJson } from "~~/types/commontypes";
+import { createFrame, getFrameById, updateFrame } from "~~/utils/apis";
+
+// Import the Frame type
 
 interface NodeModalProps {
   isOpen: boolean;
@@ -17,11 +21,14 @@ const NodeModal: React.FC<NodeModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleAddFrame = async () => {
-    const frame = {
+    const frame: Frame = {
       buttons: [],
       image: "",
-      inputText: currentNode?.data?.label,
+      inputText: "",
+      version: "vNext",
+      postUrl: "",
     };
+    console.log("Frame adding", frame);
     const response = await createFrame({
       name: currentNode?.data?.label,
       frameJson: frame,
@@ -92,12 +99,25 @@ export default NodeModal;
 
 const FrameForm = () => {
   const { currentNode, updateNode } = useJourneyForProduct();
-  const [imageUrl, setImageUrl] = useState("");
-  const [additionalInput, setAdditionalInput] = useState("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [additionalInput, setAdditionalInput] = useState<string>("");
   const [buttons, setButtons] = useState<{ action?: string; label: string; target?: string }[]>([]);
   const [activeButtonIndex, setActiveButtonIndex] = useState<number | null>(null);
   const [isPreview, setIsPreview] = useState(false);
-  const [frame, setFrame] = useState<any>({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentNode?.data?.frameId) {
+        const frame = await getFrameById(currentNode.data.frameId);
+        console.log({ frame });
+        setImageUrl(frame?.frameJson?.image);
+        setAdditionalInput(frame?.frameJson?.inputText);
+        setButtons(frame?.frameJson?.buttons || []);
+      }
+    };
+
+    fetchData();
+  }, [currentNode]);
 
   const handleAddButton = () => {
     setButtons([...buttons, { label: `Button ${buttons.length + 1}` }]);
@@ -108,17 +128,17 @@ const FrameForm = () => {
   };
 
   const handleSaveButton = (button: { action?: string; label: string; target?: string }) => {
-  if (activeButtonIndex !== null) {
-    if (!button.label.trim()) {
-      alert("The label name will remain the same");
-    } else {
-      const updatedButtons = [...buttons];
-      updatedButtons[activeButtonIndex] = button;
-      setButtons(updatedButtons);
-      setActiveButtonIndex(null);
+    if (activeButtonIndex !== null) {
+      if (!button.label.trim()) {
+        alert("The label name will remain the same");
+      } else {
+        const updatedButtons = [...buttons];
+        updatedButtons[activeButtonIndex] = button;
+        setButtons(updatedButtons);
+        setActiveButtonIndex(null);
+      }
     }
-  }
-};
+  };
 
   const handleGenerateJson = () => {
     const json: Frame = {
@@ -128,10 +148,17 @@ const FrameForm = () => {
       inputText: additionalInput,
       postUrl: "https://zizzamia.xyz/api/frame",
     };
-    return json
+    return json;
   };
 
-  console.log(handleGenerateJson());
+  const saveFrame = async () => {
+    const frameToUpdate = handleGenerateJson();
+    console.log({ frameToUpdate });
+    const response = await updateFrame(currentNode?.data.frameId as string, {
+      frameJson: frameToUpdate as FrameJson,
+    });
+    console.log({ response });
+  };
 
   return (
     <>
@@ -146,14 +173,15 @@ const FrameForm = () => {
         {isPreview ? (
           <>
             <div className="mt-5 sm:mt-6">
-              <FrameRender 
-          frame={handleGenerateJson()} // Pass the generated JSON as props to FrameRender
-          isLoggedIn={true} // Assuming isLoggedIn is always true
-          submitOption={async () => {
-            await Promise.resolve();
-          }} />
+              <FrameRender
+                frame={handleGenerateJson()} // Pass the generated JSON as props to FrameRender
+                isLoggedIn={true} // Assuming isLoggedIn is always true
+                submitOption={async () => {
+                  await Promise.resolve();
+                }}
+              />
               <button
-                onClick={handleGenerateJson}
+                onClick={saveFrame}
                 type="button"
                 className="inline-flex justify-center w-full border border-transparent px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
               >

@@ -52,7 +52,7 @@ export const createFrame = async (data: Partial<Frame>) => {
   return frame;
 };
 
-export const updateFrame = async (id: string, data: Partial<FrameJson>) => {
+export const updateFrame = async (id: string, data: Partial<Frame>) => {
   const response = await fetch(`${API_URL}/frame/${id}`, {
     method: "PUT",
     headers: {

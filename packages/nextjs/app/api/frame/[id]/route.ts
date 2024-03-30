@@ -16,7 +16,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   await connectDB();
   const frame_id = params.id;
   const payload = await req.json();
+
   const { frameJson } = payload;
+  console.log({ frameJson });
   const frame = await Frame.findByIdAndUpdate(frame_id, { frameJson }, { new: true });
   if (!frame) {
     return new NextResponse(JSON.stringify({ message: "Frame not found" }), { status: 404 });
