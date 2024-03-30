@@ -21,7 +21,7 @@ const ProductPage: NextPage = () => {
     onConnectStart,
     onConnectEnd,
   } = useJourneyForProduct();
-
+  console.log(nodes, edges);
   return (
     <div className="flex h-[100vh]">
       <div
