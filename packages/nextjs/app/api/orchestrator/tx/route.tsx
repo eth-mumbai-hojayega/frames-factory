@@ -6,7 +6,6 @@ import { ProductSalesABI } from "~~/contracts/ProductSalesABI";
 
 export async function POST(req: NextRequest): Promise<NextResponse<TransactionTargetResponse>> {
   const json = await req.json();
-  console.log("HELLO");
 
   const frameMessage = await getFrameMessage(json);
 
@@ -17,16 +16,16 @@ export async function POST(req: NextRequest): Promise<NextResponse<TransactionTa
   const result = await encodeFunctionData({
     abi: ProductSalesABI,
     functionName: "sellProduct",
-    args: ["0xf35239d2c73c1f0e1E5ee8D174E0479a4040c26C", "66082d4fb3d9263bbcbc3e35", 1, parseEther("0.01")],
+    args: ["0xf35239d2c73c1f0e1E5ee8D174E0479a4040c26C", "66082d4fb3d9263bbcbc3e35", 1],
   });
   console.log(result);
 
   return NextResponse.json({
-    chainId: "11155111", // OP Mainnet 10
+    chainId: "eip155:10", // OP Mainnet 10
     method: "eth_sendTransaction",
     params: {
       abi: ProductSalesABI as Abi,
-      to: "0x49a33cb12a17e75e9Ffd17F28E78cc844b7066ea",
+      to: "0xD724f64841917465AF364B6858D60xD724f64841917465AF364B6858D6eD7E3765D0ebeD7E3765D0eb",
       data: result,
       value: "0x0",
     },
