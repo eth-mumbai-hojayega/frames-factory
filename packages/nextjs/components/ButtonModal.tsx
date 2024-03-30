@@ -103,6 +103,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
               >
                 <option value="post">Post</option>
                 <option value="redirect">Redirect</option>
+                {/* <option value="tx">Transaction</option> */}
               </select>
 
                 <label htmlFor="label" className="block text-sm font-medium text-gray-700 mb-1">
@@ -126,6 +127,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
                   className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
                 >
                   <option value="">Select a frame</option>
+                  <option value="tx">Transaction</option>
                   {frameDataArr.map(frame => (
                     <option key={frame._id} value={frame._id}>
                       {frame.name}
