@@ -5,7 +5,6 @@ import { ProductSalesABI } from "~~/contracts/ProductSalesABI";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   /// @ts-expect-error
-  console.log("Hello");
   const result = await encodeFunctionData({
     abi: ProductSalesABI,
     functionName: "sellProduct",

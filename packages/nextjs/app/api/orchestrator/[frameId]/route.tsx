@@ -7,6 +7,26 @@ import parse from 'html-react-parser';
 
 /* eslint-disable react/jsx-key */
 const handleRequest = frames(async ctx => {
+  if (ctx.message?.transactionId) {
+    return {
+      image: (
+        <div tw="bg-purple-800 text-white w-full h-full justify-center items-center flex">
+          Transaction submitted! {ctx.message.transactionId}
+        </div>
+      ),
+      imageOptions: {
+        aspectRatio: "1:1",
+      },
+      buttons: [
+        <Button
+          action="link"
+          target={`https://www.onceupon.gg/tx/${ctx.message.transactionId}`}
+        >
+          View on block explorer
+        </Button>,
+      ],
+    };
+  }
   await connectDB();
   try {
     const frameId = ctx.url.pathname.replace("/api/orchestrator/", "");
