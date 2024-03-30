@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { initialNodes } from "./reactflow/initialNodes";
 import { useAccount } from "wagmi";
 import { createFrame, createProduct } from "~~/utils/apis";
@@ -10,6 +11,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const { address } = useAccount();
+  const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -19,6 +21,21 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setProductName("");
     setProductDescription("");
     onClose();
+  };
+
+  const handleAddJourney = async () => {
+    const newProduct = await createProduct({
+      name: productName,
+      desc: productDescription,
+      image: imageUrl,
+      walletAddress: address as string,
+      journeyJson: {
+        nodes: initialNodes,
+        edges: [],
+      },
+    });
+    console.log(newProduct);
+    router.push(`${newProduct._id}`);
   };
 
   return (
@@ -77,9 +94,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
           <div className="mt-5 sm:mt-6">
             <button
-              onClick={() => {
-                alert("Clicked");
-              }}
+              onClick={handleAddJourney}
               type="button"
               className="inline-flex justify-center w-full border border-transparent px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
             >

@@ -1,4 +1,4 @@
-import { Frame, FrameJson, Journey } from "~~/types/commontypes";
+import { Frame, Journey } from "~~/types/commontypes";
 
 const API_URL = "http://localhost:3000/api";
 

@@ -145,6 +145,7 @@ const useJourneyForProductContextProvider = () => {
       ...data,
     };
     setSelectedNode(node);
+    saveJourney();
   };
 
   const saveJourney = () => {

@@ -4,7 +4,6 @@ import FrameRender from "./FrameRender";
 // Import the FrameRender component
 import { Frame, FrameButton } from "frames.js";
 import { useJourneyForProduct } from "~~/providers/ReactFlow";
-import { FrameJson } from "~~/types/commontypes";
 import { createFrame, getFrameById, updateFrame } from "~~/utils/apis";
 
 // Import the Frame type
