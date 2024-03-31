@@ -1,3 +1,9 @@
+Product images:
+![image](https://github.com/eth-mumbai-hojayega/frames-factory/assets/56181880/58192893-1994-4cc4-b4eb-2b474fcb587f)
+![image](https://github.com/eth-mumbai-hojayega/frames-factory/assets/56181880/7df4d0d4-33a3-4a3c-929c-bab76f2d807f)
+
+
+
 Creation of Frame Story:
 Utilize the no-code frame builder provided by "hojayega" to allow users to easily create multi-page frames without the added complexity
 Each step of the storyrepresents a frame, users here edit and customize look and feel according to their requirements.
