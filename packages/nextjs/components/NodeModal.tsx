@@ -5,6 +5,7 @@ import FrameRender from "./FrameRender";
 import { Frame, FrameButton } from "frames.js";
 import { useJourneyForProduct } from "~~/providers/ReactFlow";
 import { createFrame, getFrameById, updateFrame } from "~~/utils/apis";
+import { notification } from "~~/utils/scaffold-eth";
 
 // Import the Frame type
 
@@ -27,11 +28,12 @@ const NodeModal: React.FC<NodeModalProps> = ({ isOpen, onClose }) => {
       version: "vNext",
       postUrl: "",
     };
-    console.log("Frame adding", frame);
+
     const response = await createFrame({
       name: currentNode?.data?.label,
       frameJson: frame,
     });
+    notification.success("Frame created successfully");
     updateNode(currentNode?.id as string, {
       frameId: response._id as string,
     });
@@ -167,6 +169,7 @@ const FrameForm = () => {
     const response = await updateFrame(currentNode?.data.frameId as string, {
       frameJson: frameToUpdate as Frame,
     });
+    notification.success("Frame updated successfully");
     console.log({ response });
   };
 
@@ -215,7 +218,7 @@ const FrameForm = () => {
             <select
               id="imageInput"
               value={imageUrlOption}
-              onChange={(e) => {
+              onChange={e => {
                 setImageUrlOption(e.target.value);
                 setImageUrl(""); // Clear the input box value when the dropdown selection changes
               }}
@@ -279,12 +282,12 @@ const FrameForm = () => {
               className="w-full p-2 mb-4 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
             />
             <button
-                onClick={saveFrame}
-                type="button"
-                className="inline-flex justify-center w-full border border-transparent mt-2 px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
-              >
-                Save Frame
-              </button>
+              onClick={saveFrame}
+              type="button"
+              className="inline-flex justify-center w-full border border-transparent mt-2 px-4 py-2 bg-blue-500 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm rounded-md"
+            >
+              Save Frame
+            </button>
           </>
         )}
       </>

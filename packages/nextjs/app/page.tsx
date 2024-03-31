@@ -35,11 +35,8 @@ const Home: NextPage = () => {
   return (
     <div className="">
       <div className="flex justify-center my-4">
-        <button
-          onClick={handleSelectItem}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Add Item
+        <button onClick={handleSelectItem} className="btn btn-primary">
+          Create Story
         </button>
       </div>
       <div className="container">

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { initialNodes } from "./reactflow/initialNodes";
 import { useAccount } from "wagmi";
 import { createFrame, createProduct } from "~~/utils/apis";
+import { notification } from "~~/utils/scaffold-eth";
 
 interface ModalProps {
   isOpen: boolean;
@@ -34,6 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         edges: [],
       },
     });
+    notification.success("Frame Story created successfully");
     router.push(`${newProduct._id}`);
   };
 
