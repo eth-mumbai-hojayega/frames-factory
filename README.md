@@ -1,6 +1,8 @@
 Product images:
 ![image](https://github.com/eth-mumbai-hojayega/frames-factory/assets/56181880/58192893-1994-4cc4-b4eb-2b474fcb587f)
-![image](https://github.com/eth-mumbai-hojayega/frames-factory/assets/56181880/7df4d0d4-33a3-4a3c-929c-bab76f2d807f)
+![image](https://github.com/eth-mumbai-hojayega/frames-factory/assets/56181880/db3807ac-30e2-47ea-8297-94bf3fa2d7f8)
+![image](https://github.com/eth-mumbai-hojayega/frames-factory/assets/56181880/140da277-4e3f-43f7-ad6a-e5354613c3d6)
+
 
 
 
