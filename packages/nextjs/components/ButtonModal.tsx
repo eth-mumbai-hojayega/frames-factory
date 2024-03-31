@@ -61,11 +61,7 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
   };
 
   const handleSave = () => {
-    // Conditionally set the target based on the action
-    const updatedTarget = action === "tx" ? "tx" : target;
-    
-    // Call onSave with updated values
-    onSave({ action, label, target: updatedTarget, postUrl });
+    onSave({ action, label, target, postUrl });
     handleClose();
   };
 
@@ -134,23 +130,14 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ isOpen, onClose, onSave, init
                   onChange={e => setTarget(e.target.value)}
                   className="w-full p-2 mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100 text-black"
                 >
+                  <option value="">Select a target</option>
                   {action === "tx" ? (
                     <option value="tx">Transaction API</option>
                   ) : (
                     <>
-                      <option value="">Select a frame</option>
                       {frameDataArr.map(frame => (
                         <option key={frame._id} value={frame._id}>
                           {frame.name}
-                          {/* <FrameRender
-            frame={handleGenerateJson({
-              buttons: frame.frameJson.buttons,
-              image: frame.frameJson.image,
-              inputText: typeof frame.frameJson.inputText === "string" ? frame.frameJson.inputText : "",
-            })}
-            isLoggedIn={true}
-            submitOption={() => Promise.resolve()}
-          /> */}
                         </option>
                       ))}
                     </>
